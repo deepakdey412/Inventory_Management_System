@@ -9,6 +9,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Data
@@ -34,6 +35,20 @@ public class ResponseDto {
     //Data output optional
     private UserDTO userDto;
     private List<UserDTO> users;
+
+    private SupplierDTO supplierDTO;
+    private List<SupplierDTO> suppliers;
+
+    private CategoryDTO categoryDTO;
+    private List<CategoryDTO> Categories;
+
+    private ProductsDTO productsDTO;
+    private List<ProductsDTO> products;
+
+    private TransactionsDTO transactionsDTO;
+    private List<TransactionsDTO> transactions;
+
+    private final LocalDateTime timestamp = LocalDateTime.now();
 
 
 }
