@@ -1,8 +1,12 @@
 package com.erp.InventoryManagementSystem.dtos;
 
 import com.erp.InventoryManagementSystem.enums.UserRole;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import jakarta.persistence.*;
 import lombok.*;
+import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -10,34 +14,25 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Builder
-@ToString
+@JsonInclude(JsonInclude.Include.NON_NULL)
+@JsonIgnoreProperties(ignoreUnknown = true)
+@Component
 public class UserDTO {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "user_id")
     private Long userId;
 
-    @Column(name = "user_name", nullable = false)
     private String userName;
 
-    @Column(name = "user_email", nullable = false, unique = true)
     private String userEmail;
 
-    @Column(name = "user_password", nullable = false)
+    @JsonIgnore
     private String userPassword;
 
-    @Column(name = "user_phone_number" , nullable = false)
     private String userPhoneNumber;
 
-    @Enumerated(EnumType.STRING)
-    @Column(name = "user_role")
     private UserRole userRole;
 
-    @OneToMany(mappedBy = "user")
     private List<TransactionsDTO> userTransactions;
 
-    @Column(name = "created_at", updatable = false)
-    private LocalDateTime createdAt = LocalDateTime.now();
+    private LocalDateTime createdAt;
 }

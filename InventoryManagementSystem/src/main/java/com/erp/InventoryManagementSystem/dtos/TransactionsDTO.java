@@ -2,9 +2,10 @@ package com.erp.InventoryManagementSystem.dtos;
 
 import com.erp.InventoryManagementSystem.enums.TransactionType;
 import com.erp.InventoryManagementSystem.enums.TransactionsStatus;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -14,43 +15,29 @@ import java.time.LocalDateTime;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Builder
+@JsonInclude(JsonInclude.Include.NON_NULL)
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class TransactionsDTO {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "transaction_id")
     private Long transactionId;
 
-    @Column(name = "total_product_quantity", nullable = false)
     private Integer totalProductQuantity;
 
-    @Column(name = "total_product_price", nullable = false)
     private BigDecimal totalProductPrice;
 
-    @Column(name = "transaction_type")
-    @Enumerated(EnumType.STRING)
     private TransactionType transactionType;// PURCHASE / SALE / RETURN
 
-    @Column(name = "transaction_status")
-    @Enumerated(EnumType.STRING)
     private TransactionsStatus transactionStatus;// PENDING,PROCESSING,COMPLETED,CANCELLED,
 
     private String description;
+
     private String notes;
 
-    private final LocalDateTime createdAt = LocalDateTime.now();
+    private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "product_id")
     private ProductsDTO product;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id")
     private UserDTO user;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "supplier_id")
     private SupplierDTO supplier;
 }

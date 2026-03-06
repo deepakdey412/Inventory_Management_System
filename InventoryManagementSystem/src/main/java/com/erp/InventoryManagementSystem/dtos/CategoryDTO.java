@@ -2,9 +2,8 @@ package com.erp.InventoryManagementSystem.dtos;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
-import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -17,17 +16,13 @@ import java.util.List;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class CategoryDTO {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "category_id")
     private Long categoryId;
 
-    @Column(name = "category_name", nullable = false, unique = true)
+    @NotBlank(message = "Category name is required")
     private String categoryName;
 
-    @Column(name = "category_description")
+    @NotBlank(message = "Category description is required")
     private String categoryDescription;
 
-    @OneToMany(mappedBy = "category", cascade = CascadeType.ALL)
     private List<ProductsDTO> productsList;
 }

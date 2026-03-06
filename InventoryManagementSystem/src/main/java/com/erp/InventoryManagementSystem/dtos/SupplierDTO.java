@@ -1,29 +1,28 @@
 package com.erp.InventoryManagementSystem.dtos;
 
-import jakarta.persistence.*;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Builder
+@JsonInclude(JsonInclude.Include.NON_NULL)
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class SupplierDTO {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "supplier_id")
     private Long supplierId;
 
-    @Column(name = "supplier_name", nullable = false)
+    @NotBlank(message = "Supplier name is required")
     private String supplierName;
 
-    @Column(name = "supplier_Contact_info", nullable = false)
+    @NotBlank(message = "Supplier contact info is required")
     private String supplierContactInfo;
 
-    @Column(name = "supplier_address")
+    @NotBlank(message = "Supplier address is required")
     private String supplierAddress;
 
 }
