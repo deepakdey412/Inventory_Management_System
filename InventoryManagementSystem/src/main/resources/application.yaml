@@ -27,3 +27,5 @@ spring:
     multipart:
       max-file-size: 2GB
       max-request-size: 2GB
+
+secreteJwtString: phegondev123456789phegondev123456789
