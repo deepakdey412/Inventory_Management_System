@@ -13,7 +13,7 @@ public interface IUserService {
 
     ResponseDto registerUser(RegisterDto registerDto);
     ResponseDto loginUser(LoginDto loginDto);
-    List<ResponseDto> getAllUsers();
+    ResponseDto getAllUsers();
     ResponseDto getUserById(Long id);
     User getCurrentLogedInUser();
     ResponseDto updateUser(Long id, UserDTO userDTO);

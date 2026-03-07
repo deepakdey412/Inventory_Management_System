@@ -79,7 +79,7 @@ public class UserServiceImpl implements IUserService {
     }
 
     @Override
-    public List<ResponseDto> getAllUsers() {
+    public ResponseDto getAllUsers() {
 
         List<User> users = userRepo.findAll();
 
@@ -87,11 +87,11 @@ public class UserServiceImpl implements IUserService {
                 .map(user -> modelMapper.map(user, UserDTO.class))
                 .toList();
 
-        return Collections.singletonList(ResponseDto.builder()
+        return ResponseDto.builder()
                 .status(200)
                 .message("Users fetched successfully")
                 .users(userDTOList)
-                .build());
+                .build();
     }
 
     @Override
