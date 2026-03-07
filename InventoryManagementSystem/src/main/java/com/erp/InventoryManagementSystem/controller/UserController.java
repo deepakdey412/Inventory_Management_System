@@ -1,12 +1,12 @@
 package com.erp.InventoryManagementSystem.controller;
 
-import com.erp.InventoryManagementSystem.dtos.LoginDto;
-import com.erp.InventoryManagementSystem.dtos.RegisterDto;
 import com.erp.InventoryManagementSystem.dtos.ResponseDto;
+import com.erp.InventoryManagementSystem.dtos.UserDTO;
 import com.erp.InventoryManagementSystem.services.IUserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -19,15 +19,33 @@ public class UserController {
     private final IUserService userService;
 
     @GetMapping("/getAll")
-    public ResponseEntity<List<ResponseDto>> getUsers()
-    {
+    @PreAuthorize("hasAuthority('ADMIN')")
+    public ResponseEntity<List<ResponseDto>> getUsers() {
         return ResponseEntity.ok(userService.getAllUsers());
     }
 
-    @GetMapping("/login")
-    public ResponseEntity<ResponseDto> login(@RequestBody @Valid LoginDto loginDto)
-    {
-        userService.loginUser(loginDto);
+    @GetMapping("/get/{id}")
+    public ResponseEntity<ResponseDto> getUser(@PathVariable Long id) {
+        userService.getUserById(id);
+        return ResponseEntity.ok(new ResponseDto());
+    }
+
+    @PutMapping("/update/{id}")
+    public ResponseEntity<ResponseDto> update(@PathVariable Long id, @RequestBody @Valid UserDTO userDTO) {
+        userService.updateUser(id, userDTO);
+        return ResponseEntity.ok(new ResponseDto());
+    }
+
+    @DeleteMapping("/delete/{id}")
+    @PreAuthorize("hasAuthority('ADMIN')")
+    public ResponseEntity<ResponseDto> deleteUser(@PathVariable Long id) {
+        userService.deleteUser(id);
+        return ResponseEntity.ok(new ResponseDto());
+    }
+
+    @GetMapping("/transaction/{id}")
+    public ResponseEntity<ResponseDto> transaction(@PathVariable Long id) {
+        userService.getUserTransaction(id);
         return ResponseEntity.ok(new ResponseDto());
     }
 }
