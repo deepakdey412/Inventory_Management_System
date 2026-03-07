@@ -23,7 +23,7 @@ public class JwtUtil {
 
     private SecretKey key;
 
-    @Value("${secreteJwtString}")
+    @Value("${jwt.secret}")
     private String secreteJwtString;
 
     // initialize secret key
